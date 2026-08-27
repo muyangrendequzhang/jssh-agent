@@ -1,3 +1,5 @@
 spring:
   application:
     name: jssh-agent
+  profiles:
+    active: local

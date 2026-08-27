@@ -12,7 +12,7 @@ AGENTS.md
 .settings
 .springBeans
 .sts4-cache
-
+application-local.yml
 ### IntelliJ IDEA ###
 .idea
 *.iws
