@@ -59,6 +59,9 @@ public class ClientTest {
 
             Collection<KeyPair> keys = loader.loadKeyPairs(null, Paths.get(password), null);
 
+            //走密码验证
+            //session.addPasswordIdentity("");
+
             for (KeyPair kp : keys) {
                 session.addPublicKeyIdentity(kp);
             }
