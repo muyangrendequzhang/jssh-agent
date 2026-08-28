@@ -3,6 +3,7 @@ package com.myr.service;
 import com.myr.entity.ConnectParam;
 import com.myr.entity.Result;
 import com.myr.utils.SshConnectUtils;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
@@ -21,6 +22,7 @@ public class ConnectService {
     private final SshConnectUtils sshConnectUtils = new SshConnectUtils();
 
     private SshClient sshClient;
+    @Getter
     private ClientSession session;
 
     public Result<String> connect(ConnectParam param) {
@@ -68,7 +70,4 @@ public class ConnectService {
         }
     }
 
-    public ClientSession getSession() {
-        return session;
-    }
 }

@@ -4,6 +4,7 @@ import com.myr.entity.Result;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
 import org.apache.sshd.client.session.ClientSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -16,11 +17,10 @@ import java.util.Collections;
 @Service
 public class CmdService {
 
-    private final ConnectService connectService;
+    @Autowired
+    private ConnectService connectService;
 
-    public CmdService(ConnectService connectService) {
-        this.connectService = connectService;
-    }
+
 
     public Result<String> cmdExec(String command) {
         ClientSession session = connectService.getSession();
