@@ -5,6 +5,7 @@ import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
 import org.apache.sshd.client.keyverifier.AcceptAllServerKeyVerifier;
+import org.apache.sshd.client.keyverifier.KnownHostsServerKeyVerifier;
 import org.apache.sshd.client.session.ClientSession;
 import org.apache.sshd.common.config.keys.loader.KeyPairResourceParser;
 import org.apache.sshd.common.util.io.output.NoCloseOutputStream;
@@ -13,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
@@ -39,7 +42,15 @@ public class ClientTest {
         SshClient sshClient = null;
         try {
             sshClient = SshClient.setUpDefaultClient();
-            sshClient.setServerKeyVerifier(AcceptAllServerKeyVerifier.INSTANCE);
+
+            //配置默认的公钥接受策略
+            //sshClient.setServerKeyVerifier(AcceptAllServerKeyVerifier.INSTANCE);
+
+
+            //配置校验策略
+            Path knownHostsPath = Paths.get(System.getProperty("user.home"), ".ssh", "known_hosts");
+            KnownHostsServerKeyVerifier verifier = new KnownHostsServerKeyVerifier(AcceptAllServerKeyVerifier.INSTANCE,knownHostsPath);
+            sshClient.setServerKeyVerifier(verifier);
 
             sshClient.start();
             ClientSession session = sshClient.connect(user, host, 22).verify(10000).getSession();
