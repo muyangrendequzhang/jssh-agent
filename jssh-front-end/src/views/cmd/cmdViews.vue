@@ -16,14 +16,15 @@ export default {
     return {
       term: null,
       socketUri: 'ws://127.0.0.1:8080/podname',
-      socket: '',
+      socket: null,
       accessToken: 'token',
     }
   },
   mounted() {
     this.initTerm()
   },
-  beforeDestroy() {
+  // Vue 3 用 beforeUnmount，Vue 2 的 beforeDestroy 已失效
+  beforeUnmount() {
     this.socket && this.socket.close()
     this.term && this.term.dispose()
   },
@@ -47,18 +48,26 @@ export default {
           lineHeight: 20,
         },
       })
-      // 2.webSocket初始化
-      if (this.socketUri === '') return
-      this.socket = new WebSocket(this.socketUri, this.accessToken) // 带 token 发起连接
-      // 3.websocket集成的插件,这里要注意,网上写了很多websocket相关代码.xterm4版本没必要.
-      const attachAddon = new AttachAddon(this.socket)
-      const fitAddon = new FitAddon() // 全屏插件
-      term.loadAddon(attachAddon)
-      term.loadAddon(fitAddon)
+      // 先 open 终端，再挂载插件（插件需要基于已打开的终端）
       term.open(this.$refs.terminal)
+      this.term = term
+
+      // 2.插件：先 FitAddon 自适应，再 AttachAddon 绑定 WebSocket
+      const fitAddon = new FitAddon() // 全屏插件
+      term.loadAddon(fitAddon)
       fitAddon.fit()
       term.focus()
-      this.term = term
+
+      // 3.webSocket初始化
+      if (this.socketUri === '') return
+      // token 走查询参数（后端暂未解析该参数）
+      this.socket = new WebSocket(`${this.socketUri}?token=${encodeURIComponent(this.accessToken)}`)
+      this.socket.binaryType = 'arraybuffer'
+      // 4.绑定数据：socket 与 xterm 双向传输
+      term.loadAddon(new AttachAddon(this.socket))
+      this.socket.onerror = (e) => {
+        console.error('WebSocket 错误:', e)
+      }
     },
   },
 }
