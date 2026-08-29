@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class ConnectParam {
 
+    private String connectName;
     private String host;
     private int port = 22;
     private String user;

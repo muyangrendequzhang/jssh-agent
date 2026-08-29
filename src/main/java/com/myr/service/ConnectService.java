@@ -25,48 +25,61 @@ public class ConnectService {
     @Getter
     private ClientSession session;
 
-    public Result<String> connect(ConnectParam param) {
+    public synchronized Result<String> connect(ConnectParam param) {
         if (param == null || param.getHost() == null || param.getUser() == null) {
             return Result.fail("连接参数缺失：host / user 必填");
         }
+        SshClient newClient = null;
+        ClientSession newSession = null;
         try {
-            close();
-            this.sshClient = sshConnectUtils.acceptAllSshClient();
+            newClient = sshConnectUtils.acceptAllSshClient();
 
             int port = param.getPort();
             if (param.getPassword() != null && !param.getPassword().isBlank()) {
-                this.session = sshConnectUtils.usePasswordSession(
-                        param.getUser(), param.getHost(), port, sshClient, param.getPassword());
+                newSession = sshConnectUtils.usePasswordSession(
+                        param.getUser(), param.getHost(), port, newClient, param.getPassword());
             } else {
-                this.session = sshConnectUtils.usePasswordKeySession(
-                        param.getUser(), param.getHost(), port, sshClient, param.getPrivateKeyPath());
+                newSession = sshConnectUtils.usePasswordKeySession(
+                        param.getUser(), param.getHost(), port, newClient, param.getPrivateKeyPath());
             }
+
+            // 新连接成功后，再交换并释放旧连接，避免关闭正在建立的客户端
+            SshClient oldClient = this.sshClient;
+            ClientSession oldSession = this.session;
+            this.sshClient = newClient;
+            this.session = newSession;
+            closeQuietly(oldSession, oldClient);
+
             log.info("连接成功: {}@{}:{}", param.getUser(), param.getHost(), port);
             return Result.success("连接成功", param.getHost());
         } catch (Exception e) {
             log.error("连接失败: {}", param, e);
-            close();
+            closeQuietly(newSession, newClient);
             return Result.fail("连接失败: " + e.getMessage());
         }
     }
 
     public synchronized void close() {
-        if (session != null) {
+        closeQuietly(session, sshClient);
+        session = null;
+        sshClient = null;
+    }
+
+    private void closeQuietly(ClientSession s, SshClient c) {
+        if (s != null) {
             try {
-                session.close();
+                s.close();
             } catch (IOException e) {
                 log.warn("关闭 session 失败: {}", e.getMessage());
             }
-            session = null;
         }
-        if (sshClient != null) {
+        if (c != null) {
             try {
-                sshClient.stop();
-                sshClient.close();
+                c.stop();
+                c.close();
             } catch (IOException e) {
                 log.warn("关闭 sshClient 失败: {}", e.getMessage());
             }
-            sshClient = null;
         }
     }
 

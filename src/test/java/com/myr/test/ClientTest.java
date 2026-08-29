@@ -25,7 +25,6 @@ import java.util.Collections;
 
 
 @Slf4j
-@SpringBootTest
 public class ClientTest {
 
     @Value("${ssh.connect.user}")
