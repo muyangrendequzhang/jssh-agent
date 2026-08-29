@@ -65,6 +65,9 @@ import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import '@/views/connect/views.css'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const formRef = ref<FormInstance>()
 const form = reactive({
@@ -104,10 +107,11 @@ const submitForm = async () => {
           const res = response.data
           if (res.code === 200) {
             ElMessage.success(res.message || '连接成功')
+            // 连接成功后，跳转到 cmd 页面
+            router.push({ path: '/cmd' })
           } else {
             ElMessage.error(res.message || '连接失败')
           }
-          // 这里可以根据需要进行页面跳转或其他操作
         })
         .catch((error) => {
           console.error('连接失败:', error)

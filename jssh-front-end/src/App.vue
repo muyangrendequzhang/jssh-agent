@@ -1,10 +1,6 @@
 <template>
-  <ConnectViews />
+  <router-view />
 </template>
-
-<script setup lang="ts">
-import ConnectViews from './views/connect/connectViews.vue'
-</script>
 
 <style>
 html,
