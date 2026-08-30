@@ -1,0 +1,32 @@
+/* 侧边栏导航样式 */
+.el-aside {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-right: 1px solid #e4e7ed;
+}
+
+.el-aside .el-scrollbar {
+  flex: 1;
+}
+
+/* 去掉右侧边框线，菜单占满高度 */
+.el-menu {
+  border-right: none;
+  height: 100%;
+}
+
+/* 菜单项间距与圆角 */
+.el-menu-item {
+  margin: 4px 8px;
+  border-radius: 6px;
+}
+
+.el-menu-item.is-active {
+  background-color: #ecf5ff;
+  color: #409eff;
+}
+
+.el-menu-item:hover {
+  background-color: #f5f7fa;
+}

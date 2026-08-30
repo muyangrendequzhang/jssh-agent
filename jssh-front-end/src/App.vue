@@ -29,6 +29,6 @@ body,
 
 #app .el-main {
   padding: 0;
-  overflow: hidden;
+  overflow: auto;
 }
 </style>

@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { Monitor, Odometer, Management, Folder, Connection, Setting } from '@element-plus/icons-vue'
+import '@/views/sidebar/views.css'
 
 const route = useRoute()
 </script>
