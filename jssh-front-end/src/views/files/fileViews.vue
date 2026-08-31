@@ -1,17 +1,12 @@
 <template>
   <div class="file-view">
-    <el-tree
-      lazy
-      :props="props"
-      :load="loadNode"
-      :node-key="'path'"
-      class="file-tree"
-    />
+    <el-tree lazy :props="props" :load="loadNode" :node-key="'path'" class="file-tree" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { LoadFunction } from 'element-plus'
+import '@/views/files/views.css'
 
 interface FileNode {
   name: string
@@ -31,12 +26,10 @@ const loadNode: LoadFunction = async (node, resolve) => {
     const res = await fetch(`${FILE_API}?path=${encodeURIComponent(path)}`)
     const body = await res.json()
     if (body && body.code === 200 && body.data) {
-      const children: FileNode[] = (body.data.childrenFiles || []).map(
-        (child: FileNode) => ({
-          name: child.name,
-          path: child.path,
-        }),
-      )
+      const children: FileNode[] = (body.data.childrenFiles || []).map((child: FileNode) => ({
+        name: child.name,
+        path: child.path,
+      }))
       resolve(children)
     } else {
       resolve([])
@@ -47,18 +40,3 @@ const loadNode: LoadFunction = async (node, resolve) => {
   }
 }
 </script>
-
-<style scoped>
-.file-view {
-  padding: 20px;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: auto;
-  background: #ffffff;
-}
-
-.file-tree {
-  display: inline-block;
-  min-width: 100%;
-}
-</style>

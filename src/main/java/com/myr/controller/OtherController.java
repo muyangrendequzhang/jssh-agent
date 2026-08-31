@@ -2,12 +2,15 @@ package com.myr.controller;
 
 import com.myr.entity.FileStructure;
 import com.myr.entity.MemoryInfo;
+import com.myr.entity.ProcessInfo;
 import com.myr.entity.Result;
 import com.myr.service.OtherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController("other")
@@ -24,5 +27,10 @@ public class OtherController {
     @GetMapping("file")
     public Result<FileStructure> getFile(FileStructure structure) {
         return otherService.getFileNames(structure);
+    }
+
+    @GetMapping("process")
+    public Result<List<ProcessInfo>> getProcessInfo() {
+        return otherService.getProcessInfo();
     }
 }
