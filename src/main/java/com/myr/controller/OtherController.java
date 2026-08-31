@@ -1,5 +1,6 @@
 package com.myr.controller;
 
+import com.myr.entity.FileStructure;
 import com.myr.entity.MemoryInfo;
 import com.myr.entity.Result;
 import com.myr.service.OtherService;
@@ -20,5 +21,8 @@ public class OtherController {
         return otherService.getMemory();
     }
 
-
+    @GetMapping("file")
+    public Result<FileStructure> getFile(FileStructure structure) {
+        return otherService.getFileNames(structure);
+    }
 }
