@@ -21,6 +21,11 @@ const routes: RouteRecordRaw[] = [
     name: 'memory',
     component: () => import('@/views/memory/memoryView.vue'),
   },
+  {
+    path: '/files',
+    name: 'files',
+    component: () => import('@/views/files/fileViews.vue'),
+  },
 ]
 
 const router = createRouter({

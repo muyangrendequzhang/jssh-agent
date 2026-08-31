@@ -1,34 +1,64 @@
 <template>
-  <el-tree style="max-width: 600px" :props="props" :load="loadNode" lazy />
+  <div class="file-view">
+    <el-tree
+      lazy
+      :props="props"
+      :load="loadNode"
+      :node-key="'path'"
+      class="file-tree"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { LoadFunction } from 'element-plus'
-interface Tree {
+
+interface FileNode {
   name: string
-  leaf?: boolean
+  path: string
 }
+
+const FILE_API = 'http://localhost:8080/file'
+
 const props = {
   label: 'name',
-  children: 'zones',
   isLeaf: 'leaf',
 }
-const loadNode: LoadFunction = (node, resolve) => {
-  if (node.level === 0) {
-    return resolve([{ name: 'region' }])
+
+const loadNode: LoadFunction = async (node, resolve) => {
+  const path = node.level === 0 ? '/' : node.data.path
+  try {
+    const res = await fetch(`${FILE_API}?path=${encodeURIComponent(path)}`)
+    const body = await res.json()
+    if (body && body.code === 200 && body.data) {
+      const children: FileNode[] = (body.data.childrenFiles || []).map(
+        (child: FileNode) => ({
+          name: child.name,
+          path: child.path,
+        }),
+      )
+      resolve(children)
+    } else {
+      resolve([])
+    }
+  } catch (error) {
+    console.error('加载文件列表失败:', error)
+    resolve([])
   }
-  if (node.level > 1) return resolve([])
-  setTimeout(() => {
-    const data: Tree[] = [
-      {
-        name: 'leaf',
-        leaf: true,
-      },
-      {
-        name: 'zone',
-      },
-    ]
-    resolve(data)
-  }, 500)
 }
 </script>
+
+<style scoped>
+.file-view {
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  background: #ffffff;
+}
+
+.file-tree {
+  display: inline-block;
+  min-width: 100%;
+}
+</style>
