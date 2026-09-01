@@ -75,7 +75,9 @@ const fetchProcess = async () => {
   try {
     const res = await fetch(PROCESS_API)
     const body = await res.json()
+    console.log('进程接口响应:', body)
     if (body && body.code === 200 && Array.isArray(body.data)) {
+      console.log('进程数据条数:', body.data.length, '首条:', body.data[0])
       tableData.value = body.data
     } else {
       ElMessage.error(body?.message || '查询进程失败')
