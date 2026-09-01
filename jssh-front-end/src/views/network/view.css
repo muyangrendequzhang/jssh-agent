@@ -1,0 +1,25 @@
+/* 网络管理页样式 */
+.network-view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 0;
+  background: #ffffff;
+}
+
+.network-view h3 {
+  margin: 0;
+  color: #303133;
+}
+
+.network-table {
+  padding: 16px 20px 20px;
+  background: #ffffff;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.network-table .el-table {
+  border-radius: 6px;
+  overflow: hidden;
+}

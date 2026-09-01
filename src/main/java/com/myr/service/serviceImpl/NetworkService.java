@@ -94,7 +94,7 @@ public class NetworkService {
                 // ipv4（取第一个）
                 if (current.getIpv4Address() == null) {
                     current.setIpv4Address(v4.group(1));
-                    current.setIpv4Netmask(prefixToNetmask(parseInt(v4.group(2))));
+                    current.setIpv4Netmask(prefixToNetmask(parseInt(v4.group(2))!=null?parseInt(v4.group(2)):-1));
                     current.setIpv4Broadcast(v4.group(3));
                 }
                 continue;
@@ -115,7 +115,7 @@ public class NetworkService {
         }
         for (String raw : devOutput.split("\\r?\\n")) {
             String line = raw.trim();
-            if (line.isEmpty() || !line.contains(":")) {
+            if (!line.contains(":")) {
                 continue; // 跳过表头
             }
             int idx = line.indexOf(':');
