@@ -1,0 +1,26 @@
+/* 进程管理页样式 */
+.process-view {
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.process-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.process-header h3 {
+  margin: 0;
+  color: #303133;
+}
+
+/* 弹窗详情描述项字号 */
+.el-dialog .el-descriptions__label {
+  width: 130px;
+  font-weight: 600;
+}

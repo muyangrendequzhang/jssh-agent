@@ -26,6 +26,11 @@ const routes: RouteRecordRaw[] = [
     name: 'files',
     component: () => import('@/views/files/fileViews.vue'),
   },
+  {
+    path: '/process',
+    name: 'process',
+    component: () => import('@/views/process/processView.vue'),
+  },
 ]
 
 const router = createRouter({

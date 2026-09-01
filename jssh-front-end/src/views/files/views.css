@@ -1,0 +1,12 @@
+.file-view {
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  background: #ffffff;
+}
+
+.file-tree {
+  display: inline-block;
+  min-width: 100%;
+}
