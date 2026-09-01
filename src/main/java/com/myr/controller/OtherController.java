@@ -1,9 +1,6 @@
 package com.myr.controller;
 
-import com.myr.entity.FileStructure;
-import com.myr.entity.MemoryInfo;
-import com.myr.entity.ProcessInfo;
-import com.myr.entity.Result;
+import com.myr.entity.*;
 import com.myr.service.OtherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,5 +29,10 @@ public class OtherController {
     @GetMapping("process")
     public Result<List<ProcessInfo>> getProcessInfo() {
         return otherService.getProcessInfo();
+    }
+
+    @GetMapping("network")
+    public Result<List<NetworkInfo>> getNetwork() {
+        return otherService.getNetworkInfo();
     }
 }
