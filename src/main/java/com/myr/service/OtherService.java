@@ -1,10 +1,7 @@
 package com.myr.service;
 
 import com.myr.entity.*;
-import com.myr.service.serviceImpl.FileService;
-import com.myr.service.serviceImpl.MemroyService;
-import com.myr.service.serviceImpl.NetworkService;
-import com.myr.service.serviceImpl.ProcessService;
+import com.myr.service.serviceImpl.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +32,9 @@ public class OtherService {
     @Autowired
     private NetworkService networkService;
 
+    @Autowired
+    private SystemService systemService;
+
     public Result<MemoryInfo> getMemory() {
         log.debug("调用获取memory具体实现");
        return memroyService.getMemory();
@@ -51,5 +51,9 @@ public class OtherService {
 
     public Result<List<NetworkInfo>> getNetworkInfo() {
         return networkService.getNetworkInfo();
+    }
+
+    public Result<List<SystemInfo>> getSystemInfo() {
+        return systemService.getSystemInfo();
     }
 }

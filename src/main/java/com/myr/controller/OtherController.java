@@ -35,4 +35,9 @@ public class OtherController {
     public Result<List<NetworkInfo>> getNetwork() {
         return otherService.getNetworkInfo();
     }
+
+    @GetMapping("system")
+    public Result<List<SystemInfo>> getSystemInfo(){
+        return otherService.getSystemInfo();
+    }
 }
