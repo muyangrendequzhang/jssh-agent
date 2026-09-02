@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 终端 WebSocket：把前端 xterm 与后端共享的 SSH 会话（ChannelShell）打通。
- * @ServerEndpoint 实例由容器创建，不能直接注入 Spring Bean，故用 ApplicationContextAware 取共享 session。
+ * &#064;ServerEndpoint  实例由容器创建，不能直接注入 Spring Bean，故用 ApplicationContextAware 取共享 session。
  */
 @Slf4j
 @Component
