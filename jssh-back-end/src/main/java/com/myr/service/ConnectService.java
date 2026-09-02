@@ -29,6 +29,10 @@ public class ConnectService {
         if (param == null || param.getHost() == null || param.getUser() == null) {
             return Result.fail("连接参数缺失：host / user 必填");
         }
+        if ((param.getPassword() == null || param.getPassword().isBlank())
+                && (param.getPrivateKeyPath() == null || param.getPrivateKeyPath().isBlank())) {
+            return Result.fail("请填写密码或上传私钥");
+        }
         SshClient newClient = null;
         ClientSession newSession = null;
         try {

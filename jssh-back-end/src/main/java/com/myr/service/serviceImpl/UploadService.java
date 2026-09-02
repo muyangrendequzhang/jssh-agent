@@ -19,6 +19,6 @@ public class UploadService {
         String filename = UUID.randomUUID().toString();
         Path target = Paths.get("..", "jssh-restore", "key", filename + ".pem");
         IoUtils.write(target, new String(file.getBytes(), StandardCharsets.UTF_8));
-        return filename + ".pem";
+        return target.toAbsolutePath().normalize().toString();
     }
 }

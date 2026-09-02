@@ -43,8 +43,9 @@
           <el-upload
             color:#f9fafb
             v-model:file-list="fileList"
-            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+            action="http://localhost:8080/uploadKey"
             :on-change="handleChange"
+            :on-success="handleSuccess"
           >
             <el-button type="primary">点击上传密钥</el-button>
             <template #tip>
@@ -134,7 +135,18 @@ const submitForm = async () => {
   })
 }
 
-//
+//提交成功后回传文件名
+const handleSuccess: UploadProps['onSuccess'] = (response, file, fileList) => {
+  console.log('上传成功:', response, file, fileList)
+  if (response.code === 200) {
+    ElMessage.success(response.message || '上传成功')
+    form.privateKeyPath = response.data || ''
+  } else {
+    ElMessage.error(response.message || '上传失败')
+  }
+}
+
+//处理更新
 const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
   fileList.value = fileList.value.slice(-3)
 }
