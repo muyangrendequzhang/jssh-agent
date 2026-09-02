@@ -2,11 +2,13 @@ package com.myr.service;
 
 import com.myr.entity.ConnectParam;
 import com.myr.entity.Result;
+import com.myr.service.serviceImpl.UploadService;
 import com.myr.utils.SshConnectUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,6 +20,9 @@ import java.io.IOException;
 @Slf4j
 @Service
 public class ConnectService {
+
+    @Autowired
+    public UploadService uploadService;
 
     private final SshConnectUtils sshConnectUtils = new SshConnectUtils();
 
@@ -53,6 +58,8 @@ public class ConnectService {
             this.sshClient = newClient;
             this.session = newSession;
             closeQuietly(oldSession, oldClient);
+
+            uploadService.uploadConnection(param);
 
             log.info("连接成功: {}@{}:{}", param.getUser(), param.getHost(), port);
             return Result.success("连接成功", param.getHost());
