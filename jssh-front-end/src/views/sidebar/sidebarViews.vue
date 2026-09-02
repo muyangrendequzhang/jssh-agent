@@ -31,6 +31,11 @@
           <el-icon><Setting /></el-icon>
           <span>服务管理（systemctl）</span>
         </el-menu-item>
+
+        <el-menu-item index="/connection">
+          <el-icon><Connection /></el-icon>
+          <span>连接管理</span>
+        </el-menu-item>
       </el-menu>
     </el-scrollbar>
   </el-aside>
@@ -40,6 +45,7 @@
 import { useRoute } from 'vue-router'
 import { Monitor, Odometer, Management, Folder, Connection, Setting } from '@element-plus/icons-vue'
 import '@/views/sidebar/views.css'
+import { el } from 'element-plus/es/locales.mjs'
 
 const route = useRoute()
 </script>
