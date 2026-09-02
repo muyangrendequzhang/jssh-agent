@@ -38,13 +38,19 @@
             />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="私钥路径" prop="privateKeyPath">
-            <el-input
-              v-model="form.privateKeyPath"
-              placeholder="请输入私钥路径，如 D:/ssh/HK.pem"
-            />
-          </el-form-item>
+        <el-col :span="4"> </el-col>
+        <el-col :span="4">
+          <el-upload
+            color:#f9fafb
+            v-model:file-list="fileList"
+            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+            :on-change="handleChange"
+          >
+            <el-button type="primary">点击上传密钥</el-button>
+            <template #tip>
+              <div class="el-upload__tip">ps: 请选择私钥文件</div>
+            </template>
+          </el-upload>
         </el-col>
 
         <!-- 按钮行：单独占一整行 -->
@@ -66,6 +72,7 @@ import { ElMessage } from 'element-plus'
 import '@/views/connect/views.css'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import type { UploadProps, UploadUserFile } from 'element-plus'
 
 const router = useRouter()
 
@@ -78,6 +85,9 @@ const form = reactive({
   password: '',
   privateKeyPath: '',
 })
+
+const fileList = ref<UploadUserFile[]>([])
+
 const rules: FormRules = {
   connectName: [{ required: true, message: '请输入连接名称', trigger: 'blur' }],
   host: [{ required: true, message: '请输入主机地址', trigger: 'blur' }],
@@ -122,6 +132,11 @@ const submitForm = async () => {
       console.log('表单校验失败', fields)
     }
   })
+}
+
+//
+const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
+  fileList.value = fileList.value.slice(-3)
 }
 
 // 重置表单
