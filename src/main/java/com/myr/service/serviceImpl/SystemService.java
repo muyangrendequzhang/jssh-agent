@@ -34,7 +34,7 @@ public class SystemService {
         }
         try {
             String output = exec(session,
-                    "systemctl list-units --type=service --all --no-legend --no-pager");
+                    "systemctl list-units --type=service --all --no-legend --no-pager --plain");
             log.info("systemctl 原始输出长度={}, 前300字符={}",
                     output == null ? 0 : output.length(), preview(output));
             List<SystemInfo> list = parse(output);
