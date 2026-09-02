@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import '@/views/service/view.css'
+import '@/views/system/view.css'
 
 interface ServiceInfo {
   unit: string
@@ -34,7 +34,7 @@ const tableHeight = ref(window.innerHeight - 150)
 
 const fetchServiceData = async () => {
   try {
-    const response = await fetch('http://localhost:8080/services')
+    const response = await fetch('http://localhost:8080/system')
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }

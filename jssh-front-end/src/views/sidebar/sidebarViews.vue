@@ -27,7 +27,7 @@
           <span>网络管理</span>
         </el-menu-item>
 
-        <el-menu-item index="/services">
+        <el-menu-item index="/system">
           <el-icon><Setting /></el-icon>
           <span>服务管理（systemctl）</span>
         </el-menu-item>

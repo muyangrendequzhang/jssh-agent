@@ -35,6 +35,8 @@ public class SystemService {
         try {
             String output = exec(session,
                     "systemctl list-units --type=service --all --no-legend --no-pager");
+            log.info("systemctl 原始输出长度={}, 前300字符={}",
+                    output == null ? 0 : output.length(), preview(output));
             List<SystemInfo> list = parse(output);
             log.info("解析到服务数={}", list.size());
             return Result.success(list);
@@ -57,7 +59,8 @@ public class SystemService {
                 continue;
             }
             String[] parts = line.split("\\s+");
-            if (parts.length < 5) {
+            // systemctl 行固定前 4 列（UNIT/LOAD/ACTIVE/SUB），描述可能为空
+            if (parts.length < 4) {
                 continue;
             }
             SystemInfo info = new SystemInfo();
@@ -65,10 +68,21 @@ public class SystemService {
             info.setLoad(parts[1]);
             info.setActive(parts[2]);
             info.setSub(parts[3]);
-            info.setDescription(String.join(" ", Arrays.copyOfRange(parts, 4, parts.length)));
+            info.setDescription(parts.length > 4
+                    ? String.join(" ", Arrays.copyOfRange(parts, 4, parts.length))
+                    : "");
             list.add(info);
         }
+        log.debug("解析结果: {}", list);
         return list;
+    }
+
+    private String preview(String s) {
+        if (s == null) {
+            return "null";
+        }
+        String v = s.trim();
+        return v.substring(0, Math.min(v.length(), 300)).replace("\n", "\\n");
     }
 
     private String exec(ClientSession session, String command) throws Exception {

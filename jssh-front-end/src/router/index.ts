@@ -36,6 +36,11 @@ const routes: RouteRecordRaw[] = [
     name: 'network',
     component: () => import('@/views/network/networkView.vue'),
   },
+  {
+    path: '/system',
+    name: 'system',
+    component: () => import('@/views/system/systemView.vue'),
+  },
 ]
 
 const router = createRouter({
