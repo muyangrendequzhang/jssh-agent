@@ -1,0 +1,30 @@
+/* 服务管理页样式 */
+.service-view {
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 0;
+}
+
+.service-header h3 {
+  margin: 0;
+  color: #303133;
+}
+
+.service-table {
+  padding: 16px 20px 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.service-table .el-table {
+  border-radius: 6px;
+  overflow: hidden;
+}
