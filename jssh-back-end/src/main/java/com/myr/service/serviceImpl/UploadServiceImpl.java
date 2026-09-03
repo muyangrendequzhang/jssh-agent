@@ -1,6 +1,7 @@
 package com.myr.service.serviceImpl;
 
 import com.myr.entity.ConnectParam;
+import com.myr.service.UploadService;
 import com.myr.utils.IoUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,30 +17,32 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
-public class UploadService {
+public class UploadServiceImpl implements UploadService {
 
     private static final Path CONNECTION_DIR = Paths.get("..", "jssh-restore", "connection");
     private static final String CONNECTION_SUFFIX = ".txt";
 
-
+    @Override
     public String uploadKey(MultipartFile file) throws IOException {
-
         String filename = UUID.randomUUID().toString();
         Path target = Paths.get("..", "jssh-restore", "key", filename + ".pem");
         IoUtils.write(target, new String(file.getBytes(), StandardCharsets.UTF_8));
         return target.toAbsolutePath().normalize().toString();
     }
 
+    @Override
     public void uploadConnection(ConnectParam param) throws IOException {
         Path file = connectionFile(param.getConnectName());
         IoUtils.saveConnection(toInfo(param), file);
     }
 
+    @Override
     public ConnectParam readByName(String connectName) throws IOException {
         IoUtils.ConnectionInfo info = IoUtils.loadConnection(connectionFile(connectName));
         return info == null ? null : toParam(connectName, info);
     }
 
+    @Override
     public List<ConnectParam> listConnection() throws IOException {
         List<ConnectParam> result = new ArrayList<>();
         if (!Files.exists(CONNECTION_DIR)) {
@@ -60,6 +63,12 @@ public class UploadService {
             }
         }
         return result;
+    }
+
+    @Override
+    public void deleteFile(String connectName) throws IOException {
+        Path resolve = CONNECTION_DIR.resolve(connectName + CONNECTION_SUFFIX);
+        IoUtils.delete(resolve);
     }
 
     private Path connectionFile(String connectName) {
@@ -85,10 +94,5 @@ public class UploadService {
         param.setPassword(info.getPassword());
         param.setPrivateKeyPath(info.getPrivateKeyPath());
         return param;
-    }
-
-    public void deleteFile(String connectName) throws IOException {
-        Path resolve = CONNECTION_DIR.resolve(connectName + CONNECTION_SUFFIX);
-        IoUtils.delete(resolve);
     }
 }

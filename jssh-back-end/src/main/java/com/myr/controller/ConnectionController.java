@@ -2,11 +2,9 @@ package com.myr.controller;
 
 import com.myr.entity.ConnectParam;
 import com.myr.entity.Result;
-import com.myr.service.ConnectService;
-import com.myr.service.serviceImpl.ConnectionService;
+import com.myr.service.ConnectionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

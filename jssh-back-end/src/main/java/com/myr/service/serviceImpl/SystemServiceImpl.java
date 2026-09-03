@@ -3,6 +3,7 @@ package com.myr.service.serviceImpl;
 import com.myr.entity.Result;
 import com.myr.entity.SystemInfo;
 import com.myr.service.ConnectService;
+import com.myr.service.SystemService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -18,15 +19,16 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class SystemService {
+public class SystemServiceImpl implements SystemService {
 
     @Autowired
     private ConnectService connectService;
 
-    public ClientSession getSession() {
+    private ClientSession getSession() {
         return connectService.getSession();
     }
 
+    @Override
     public Result<List<SystemInfo>> getSystemInfo() {
         ClientSession session = getSession();
         if (session == null || !session.isOpen()) {

@@ -3,6 +3,7 @@ package com.myr.service.serviceImpl;
 import com.myr.entity.MemoryInfo;
 import com.myr.entity.Result;
 import com.myr.service.ConnectService;
+import com.myr.service.MemoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -17,19 +18,20 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class MemroyService {
+public class MemoryServiceImpl implements MemoryService {
     private static final String SEPARATOR = "@@@@";
 
     @Autowired
     private ConnectService connectService;
 
-    public ClientSession getSession() {
+    private ClientSession getSession() {
         return connectService.getSession();
     }
 
     /**
      * 查询内存信息：在长连接 shell 上执行 cat /proc/meminfo 并解析为 MemoryInfo
      */
+    @Override
     public Result<MemoryInfo> getMemory() {
         ClientSession session = getSession();
         if (session == null || !session.isOpen()) {

@@ -3,6 +3,7 @@ package com.myr.service.serviceImpl;
 import com.myr.entity.NetworkInfo;
 import com.myr.entity.Result;
 import com.myr.service.ConnectService;
+import com.myr.service.NetworkService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -21,7 +22,7 @@ import java.util.regex.Pattern;
 
 @Slf4j
 @Service
-public class NetworkService {
+public class NetworkServiceImpl implements NetworkService {
 
     private static final Pattern HEADER = Pattern.compile("^\\d+:\\s+(\\S+):\\s+<([^>]+)>\\s+mtu\\s+(\\d+).*?(?:qlen\\s+(\\d+))?.*");
     private static final Pattern LINK = Pattern.compile("^link/(\\S+)\\s+(\\S+).*");
@@ -31,10 +32,11 @@ public class NetworkService {
     @Autowired
     private ConnectService connectService;
 
-    public ClientSession getSession() {
+    private ClientSession getSession() {
         return connectService.getSession();
     }
 
+    @Override
     public Result<List<NetworkInfo>> getNetworkInfo() {
         ClientSession session = getSession();
         if (session == null || !session.isOpen()) {

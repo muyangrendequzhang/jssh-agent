@@ -3,6 +3,7 @@ package com.myr.service.serviceImpl;
 import com.myr.entity.FileStructure;
 import com.myr.entity.Result;
 import com.myr.service.ConnectService;
+import com.myr.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannelEvent;
@@ -17,15 +18,16 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class FileService {
+public class FileServiceImpl implements FileService {
 
     @Autowired
     private ConnectService connectService;
 
-    public ClientSession getSession() {
+    private ClientSession getSession() {
         return connectService.getSession();
     }
 
+    @Override
     public Result<FileStructure> getFileNames(FileStructure structure) {
         String path = structure.path;
         ClientSession session = getSession();
