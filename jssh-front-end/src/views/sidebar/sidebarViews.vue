@@ -23,7 +23,7 @@
         </el-menu-item>
 
         <el-menu-item index="/network">
-          <el-icon><Connection /></el-icon>
+          <el-icon><Monitor /></el-icon>
           <span>网络管理</span>
         </el-menu-item>
 
@@ -36,6 +36,16 @@
           <el-icon><Connection /></el-icon>
           <span>连接管理</span>
         </el-menu-item>
+
+        <el-menu-item index="/connect">
+          <el-icon><SwitchButton /></el-icon>
+          <span>连接界面</span>
+        </el-menu-item>
+
+        <el-menu-item index="/settings" class="settings-bottom">
+          <el-icon><Setting /></el-icon>
+          <span>设置</span>
+        </el-menu-item>
       </el-menu>
     </el-scrollbar>
   </el-aside>
@@ -43,7 +53,15 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { Monitor, Odometer, Management, Folder, Connection, Setting } from '@element-plus/icons-vue'
+import {
+  Monitor,
+  Odometer,
+  Management,
+  Folder,
+  Connection,
+  Setting,
+  SwitchButton,
+} from '@element-plus/icons-vue'
 import '@/views/sidebar/views.css'
 import { el } from 'element-plus/es/locales.mjs'
 

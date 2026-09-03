@@ -10,15 +10,21 @@
   flex: 1;
 }
 
-/* 去掉右侧边框线，菜单占满高度 */
-.el-menu {
-  border-right: none;
+.el-aside .el-scrollbar__view {
   height: 100%;
 }
 
-/* 菜单项间距与圆角 */
+/* 菜单撑满高度，便于底部设置项贴底 */
+.el-menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-right: none;
+}
+
+/* 菜单项：紧凑间距 + 圆角 */
 .el-menu-item {
-  margin: 4px 8px;
+  margin: 2px 8px;
   border-radius: 6px;
 }
 
@@ -29,4 +35,14 @@
 
 .el-menu-item:hover {
   background-color: #f5f7fa;
+}
+
+/* 底部设置项：仅图标，置于底 */
+.settings-item {
+  margin-top: auto;
+  justify-content: center;
+}
+
+.settings-item .el-icon {
+  margin-right: 0;
 }
