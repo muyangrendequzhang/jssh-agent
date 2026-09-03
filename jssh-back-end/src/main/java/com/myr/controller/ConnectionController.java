@@ -17,7 +17,6 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("connection")
 public class ConnectionController {
 
