@@ -43,7 +43,7 @@
           <el-upload
             color:#f9fafb
             v-model:file-list="fileList"
-            action="http://localhost:8080/uploadKey"
+            :action="uploadAction"
             :on-change="handleChange"
             :on-success="handleSuccess"
           >
@@ -71,11 +71,13 @@ import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import '@/views/connect/views.css'
-import axios from 'axios'
+import http, { API, API_BASE_URL } from '@/api/http'
 import { useRouter } from 'vue-router'
 import type { UploadProps, UploadUserFile } from 'element-plus'
 
 const router = useRouter()
+
+const uploadAction = API_BASE_URL + API.uploadKey
 
 const formRef = ref<FormInstance>()
 const form = reactive({
@@ -110,8 +112,8 @@ const submitForm = async () => {
       // 验证通过，执行提交操作（如调用 API）
       console.log('提交的表单数据：', form)
 
-      axios
-        .post('http://localhost:8080/base/connect', form)
+      http
+        .post(API.connect, form)
         .then((response) => {
           // response.data 是 JSON 对象，需 JSON.stringify，或取字段
           console.log('连接结果:', JSON.stringify(response.data))

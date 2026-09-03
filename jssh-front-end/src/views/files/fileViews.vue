@@ -7,13 +7,12 @@
 <script setup lang="ts">
 import type { LoadFunction } from 'element-plus'
 import '@/views/files/views.css'
+import http, { API } from '@/api/http'
 
 interface FileNode {
   name: string
   path: string
 }
-
-const FILE_API = 'http://localhost:8080/file'
 
 const props = {
   label: 'name',
@@ -23,8 +22,8 @@ const props = {
 const loadNode: LoadFunction = async (node, resolve) => {
   const path = node.level === 0 ? '/' : node.data.path
   try {
-    const res = await fetch(`${FILE_API}?path=${encodeURIComponent(path)}`)
-    const body = await res.json()
+    const res = await http.get(API.file, { params: { path } })
+    const body = res.data
     if (body && body.code === 200 && body.data) {
       const children: FileNode[] = (body.data.childrenFiles || []).map((child: FileNode) => ({
         name: child.name,

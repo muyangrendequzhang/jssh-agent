@@ -56,6 +56,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 import { ElMessage } from 'element-plus'
 import type { CollapseModelValue } from 'element-plus'
+import http, { API } from '@/api/http'
 
 interface MemoryInfo {
   totalMemory: number
@@ -76,7 +77,7 @@ interface MemoryInfo {
   timestamp: number
 }
 
-const MEMORY_API = 'http://localhost:8080/memory'
+const MEMORY_API = API.memory
 
 const activeNames = ref<string[]>(['1', '2'])
 const handleChange = (_val: CollapseModelValue) => {
@@ -168,8 +169,8 @@ const onResize = () => {
 
 const fetchMemoryData = async () => {
   try {
-    const res = await fetch(MEMORY_API)
-    const body = await res.json()
+    const res = await http.get(MEMORY_API)
+    const body = res.data
     if (!body || body.code !== 200 || !body.data) {
       return
     }

@@ -20,6 +20,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import '@/views/system/view.css'
+import http, { API } from '@/api/http'
 
 interface ServiceInfo {
   unit: string
@@ -34,11 +35,8 @@ const tableHeight = ref(window.innerHeight - 150)
 
 const fetchServiceData = async () => {
   try {
-    const response = await fetch('http://localhost:8080/system')
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
-    }
-    const body = await response.json()
+    const response = await http.get(API.system)
+    const body = response.data
     console.log('服务接口响应:', body)
     if (body && body.code === 200 && Array.isArray(body.data)) {
       tableData.value = body.data

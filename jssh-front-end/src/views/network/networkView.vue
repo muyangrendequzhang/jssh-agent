@@ -33,9 +33,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import '@/views/network/view.css'
-import axios from 'axios'
-
-const NETWORK_API = 'http://localhost:8080/network'
+import http, { API } from '@/api/http'
 
 interface NetworkInfo {
   interfaceName: string
@@ -70,7 +68,7 @@ const tableDate = ref<NetworkInfo[]>([])
 
 const fetchNetworkData = async () => {
   try {
-    const response = await axios.get(NETWORK_API)
+    const response = await http.get(API.network)
     console.log('网络接口响应:', response.data)
     if (response.data && response.data.code === 200 && Array.isArray(response.data.data)) {
       tableDate.value = response.data.data

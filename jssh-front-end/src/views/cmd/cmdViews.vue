@@ -9,13 +9,14 @@ import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import { AttachAddon } from 'xterm-addon-attach'
+import { WS_BASE_URL, API } from '@/api/http'
 
 export default {
   name: 'terminal',
   data() {
     return {
       term: null,
-      socketUri: 'ws://127.0.0.1:8080/podname',
+      socketUri: WS_BASE_URL + API.wsPod,
       socket: null,
       accessToken: 'token',
     }

@@ -34,6 +34,7 @@ import { ElTable, ElTableColumn, ElMessage, ElMessageBox } from 'element-plus'
 import 'element-plus/dist/index.css'
 import './view.css'
 import { useRouter } from 'vue-router'
+import http, { API } from '@/api/http'
 
 const router = useRouter()
 
@@ -49,8 +50,8 @@ const tableData = ref<ConnectionInfo[]>([])
 
 const fetchData = async () => {
   try {
-    const response = await fetch('http://localhost:8080/connection')
-    const result = await response.json()
+    const response = await http.get(API.connection)
+    const result = response.data
     if (result.code === 200) {
       tableData.value = result.data
     }
@@ -61,14 +62,8 @@ const fetchData = async () => {
 
 const connect = async (index: number, row: ConnectionInfo) => {
   try {
-    const response = await fetch('http://localhost:8080/base/connect', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(row),
-    })
-    const result = await response.json()
+    const response = await http.post(API.connect, row)
+    const result = response.data
     if (result.code === 200) {
       ElMessage.success(result.message || '连接成功')
       router.push('/cmd')
@@ -91,10 +86,8 @@ const handleDelete = async (index: number, row: ConnectionInfo) => {
     })
 
     // ✅ 用户点击「确定」后才会执行到这里
-    const response = await fetch(`http://localhost:8080/connection/${encodeURIComponent(row.connectName)}`, {
-      method: 'DELETE',
-    })
-    const result = await response.json()
+    const response = await http.delete(`${API.connection}/${encodeURIComponent(row.connectName)}`)
+    const result = response.data
 
     if (result.code === 200) {
       ElMessage.success(result.message || '删除成功')
