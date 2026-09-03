@@ -1,12 +1,36 @@
 package com.myr.controller;
 
+import com.myr.entity.ConnectParam;
+import com.myr.entity.Result;
+import com.myr.service.ConnectService;
+import com.myr.service.serviceImpl.ConnectionService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * 该类用来已经完成的ssh连接
  */
 @RestController
+@Slf4j
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("connection")
 public class ConnectionController {
 
+    @Autowired
+    public ConnectionService connectionService;
+
+
+    @GetMapping
+    public Result<List<ConnectParam>> getConnections() throws IOException {
+        List<ConnectParam> list = connectionService.getConnections();
+        return Result.success(list);
+    }
 }

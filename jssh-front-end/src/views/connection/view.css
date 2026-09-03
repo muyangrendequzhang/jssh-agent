@@ -1,0 +1,27 @@
+.connection-page {
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  background: #f5f7fa;
+}
+
+.connection-page .el-table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.connection-page .el-table th.el-table__cell {
+  background: #fafafa;
+  color: #374151;
+  font-weight: 600;
+}
+
+.connection-page .el-table .el-table__cell {
+  color: #4b5563;
+}
+
+.connection-page .el-table__row:hover > td.el-table__cell {
+  background: #ecf5ff;
+}
