@@ -7,10 +7,7 @@ import com.myr.service.serviceImpl.ConnectionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,5 +29,11 @@ public class ConnectionController {
     public Result<List<ConnectParam>> getConnections() throws IOException {
         List<ConnectParam> list = connectionService.getConnections();
         return Result.success(list);
+    }
+
+    @DeleteMapping("/{connectName}")
+    public Result<String> deleteConnection(@PathVariable("connectName") String connectName) throws IOException {
+        connectionService.deleteConnection(connectName);
+        return Result.success("成功删除");
     }
 }

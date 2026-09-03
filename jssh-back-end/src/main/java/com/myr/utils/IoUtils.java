@@ -68,6 +68,13 @@ public final class IoUtils {
     }
 
     /**
+     * 删除指定路径的文件，文件不存在时不做任何操作。
+     */
+    public static void delete(Path file) throws IOException {
+        Files.deleteIfExists(file);
+    }
+
+    /**
      * 确保父目录存在，不存在则递归创建。
      */
     public static void ensureParent(Path file) throws IOException {

@@ -86,4 +86,9 @@ public class UploadService {
         param.setPrivateKeyPath(info.getPrivateKeyPath());
         return param;
     }
+
+    public void deleteFile(String connectName) throws IOException {
+        Path resolve = CONNECTION_DIR.resolve(connectName + CONNECTION_SUFFIX);
+        IoUtils.delete(resolve);
+    }
 }
