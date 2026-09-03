@@ -7,16 +7,30 @@
       <el-table-column prop="user" label="User" width="180" />
       <el-table-column prop="password" label="Password" width="180" />
       <el-table-column prop="privateKeyPath" label="Private Key Path" width="180" />
+      <el-table-column label="Operations">
+        <template #default="scope">
+          <el-button
+            size="small"
+            type="danger"
+            @click="connect(scope.$index, scope.row as ConnectionInfo)"
+          >
+            连接
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { ElTable, ElTableColumn } from 'element-plus'
+import { ref, onMounted } from 'vue'
+import { ElTable, ElTableColumn, ElMessage } from 'element-plus'
 import 'element-plus/dist/index.css'
 import './view.css'
+import { useRouter } from 'vue-router'
 
-interface ConnectionInfo {
+const router = useRouter()
+
+type ConnectionInfo = {
   connectName: string
   host: string
   port: number
@@ -35,6 +49,28 @@ const fetchData = async () => {
     }
   } catch (error) {
     console.error('Error fetching data:', error)
+  }
+}
+
+const connect = async (index: number, row: ConnectionInfo) => {
+  try {
+    const response = await fetch('http://localhost:8080/base/connect', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(row),
+    })
+    const result = await response.json()
+    if (result.code === 200) {
+      ElMessage.success(result.message || '连接成功')
+      router.push('/cmd')
+    } else {
+      ElMessage.error(result.message || '连接失败')
+    }
+  } catch (error) {
+    console.error('Error connecting to server:', error)
+    ElMessage.error('连接失败')
   }
 }
 
