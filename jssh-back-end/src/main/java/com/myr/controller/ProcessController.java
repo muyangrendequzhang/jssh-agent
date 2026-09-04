@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("process")
 public class ProcessController {
 
     @Autowired
     private ProcessService processService;
 
-    @GetMapping("process")
+    @GetMapping
     public Result<List<ProcessInfo>> getProcessInfo() {
         return processService.getProcessInfo();
     }
