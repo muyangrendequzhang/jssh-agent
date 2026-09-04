@@ -1,9 +1,10 @@
 spring:
   application:
     name: jssh-agent
-  profiles:
-    active: local
 
 app:
   cors:
     allowed-origins: http://localhost:5173
+
+local:
+  store: D:\Downloads

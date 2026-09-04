@@ -19,9 +19,6 @@ public class ConnectController {
     private  ConnectService connectService;
 
 
-
-
-
     @PostMapping("connect")
     public Result<String> makeConnection(@RequestBody ConnectParam param) {
         log.debug("连接参数：{}", param.toString());

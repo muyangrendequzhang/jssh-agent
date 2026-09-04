@@ -27,8 +27,8 @@
         <url/>
     </scm>
     <properties>
-        <!-- 统一版本号，推荐使用最新的稳定版 -->
-        <java.version>17</java.version>
+        <!-- 统一版本号：需与下方 compiler 的预览开关一致，为 21 -->
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -62,6 +62,12 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.sshd</groupId>
+            <artifactId>sshd-sftp</artifactId>
+            <version>2.19.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -69,6 +75,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>

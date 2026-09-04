@@ -6,4 +6,6 @@ import com.myr.entity.Result;
 public interface FileService {
 
     Result<FileStructure> getFileNames(FileStructure structure);
+
+    void downloadFile(FileStructure fileStructure);
 }
