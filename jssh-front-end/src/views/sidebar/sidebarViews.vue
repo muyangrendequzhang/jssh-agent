@@ -7,6 +7,11 @@
           <span>终端交互</span>
         </el-menu-item>
 
+        <el-menu-item index="/chat">
+          <el-icon><ChatDotRound /></el-icon>
+          <span>AI 助手</span>
+        </el-menu-item>
+
         <el-menu-item index="/memory">
           <el-icon><Odometer /></el-icon>
           <span>系统监控（内存/CPU/网络）</span>
@@ -61,6 +66,7 @@ import {
   Connection,
   Setting,
   SwitchButton,
+  ChatDotRound,
 } from '@element-plus/icons-vue'
 import '@/views/sidebar/views.css'
 import { el } from 'element-plus/es/locales.mjs'

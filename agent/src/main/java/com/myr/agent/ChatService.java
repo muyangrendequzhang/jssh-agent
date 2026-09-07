@@ -1,5 +1,6 @@
 package com.myr.agent;
 
+import com.alibaba.cloud.ai.graph.RunnableConfig;
 import com.alibaba.cloud.ai.graph.agent.ReactAgent;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +20,11 @@ public class ChatService {
      */
     public Flux<Message> stream(String message) {
         try {
-            return chatModel.streamMessages(message);
+            // 使用 thread_id 维护对话上下文
+            RunnableConfig config = RunnableConfig.builder()
+                    .threadId("1") // threadId 指定会话 ID
+                    .build();
+            return chatModel.streamMessages(message,config);
         } catch (Exception e) {
             return Flux.error(new RuntimeException("调用 agent 失败: " + e.getMessage(), e));
         }
