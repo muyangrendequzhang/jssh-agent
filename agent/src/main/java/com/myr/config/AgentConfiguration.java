@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AgentConfiguration {
-    @Bean
+    @Bean(name = "chatModel")
     public ReactAgent myAgent(@Qualifier("deepSeekChatModel") ChatModel chatModel, ToolCallbackProvider myTools) {
         return ReactAgent.builder()
                 // 1. 注入大模型
