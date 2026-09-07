@@ -1,4 +1,4 @@
-package com.xmeport.agent;
+package com.myr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

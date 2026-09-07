@@ -1,6 +1,7 @@
 spring:
   application:
     name: agent
-  ai:
-    dashscope:
-    api-key: ${AI_DASHSCOPE_API_KEY}
+  profiles:
+    active: dev
+server:
+  port: 8081

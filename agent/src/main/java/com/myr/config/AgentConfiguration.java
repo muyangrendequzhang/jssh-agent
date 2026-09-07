@@ -1,9 +1,8 @@
-package com.xmeport.agent.agent;
+package com.myr.config;
 
 import com.alibaba.cloud.ai.graph.agent.ReactAgent;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.tool.ToolCallback;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AgentConfiguration {
     @Bean
-    public ReactAgent myAgent(@Qualifier("dashScopeChatModel") ChatModel chatModel, ToolCallback[] myTools) {
+    public ReactAgent myAgent(@Qualifier("deepSeekChatModel") ChatModel chatModel, ToolCallback[] myTools) {
         return ReactAgent.builder()
                 // 1. 注入大模型
                 .model(chatModel)

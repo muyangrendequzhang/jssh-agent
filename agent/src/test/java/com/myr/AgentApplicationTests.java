@@ -1,4 +1,4 @@
-package com.xmeport.agent;
+package com.myr;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
