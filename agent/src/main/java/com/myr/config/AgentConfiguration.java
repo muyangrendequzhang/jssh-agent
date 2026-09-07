@@ -13,6 +13,8 @@ public class AgentConfiguration {
     @Bean(name = "chatModel")
     public ReactAgent myAgent(@Qualifier("deepSeekChatModel") ChatModel chatModel, ToolCallbackProvider myTools) {
         return ReactAgent.builder()
+                // 0. agent 名称（必填）
+                .name("chatAgent")
                 // 1. 注入大模型
                 .model(chatModel)
                 // 2. 设定系统指令 (Instruction)
