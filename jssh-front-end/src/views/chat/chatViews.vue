@@ -49,6 +49,8 @@ import { Loading, Tools } from '@element-plus/icons-vue'
 import './chat.css'
 import { chatStream } from '@/api/agent'
 
+defineOptions({ name: 'chat' })
+
 type ToolEvent = {
   name: string
   responseData: string

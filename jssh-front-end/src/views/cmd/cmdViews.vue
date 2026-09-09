@@ -12,7 +12,7 @@ import { AttachAddon } from 'xterm-addon-attach'
 import { WS_BASE_URL, API } from '@/api/http'
 
 export default {
-  name: 'terminal',
+  name: 'cmd',
   data() {
     return {
       term: null,
