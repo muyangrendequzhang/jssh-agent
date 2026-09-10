@@ -1,7 +1,7 @@
 package com.myr.agent;
 
 import com.alibaba.cloud.ai.graph.RunnableConfig;
-import com.alibaba.cloud.ai.graph.agent.ReactAgent;
+import com.alibaba.cloud.ai.graph.agent.flow.agent.SequentialAgent;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import reactor.core.publisher.Flux;
 
 @Service
 public class ChatService {
-    private final ReactAgent chatModel;
+    private final SequentialAgent chatModel;
 
-    public ChatService(@Qualifier("chatModel") ReactAgent chatModel) {
+    public ChatService(@Qualifier("integrateAgent") SequentialAgent chatModel) {
         this.chatModel = chatModel;
     }
 

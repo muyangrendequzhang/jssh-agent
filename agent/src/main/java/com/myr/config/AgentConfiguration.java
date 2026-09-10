@@ -18,7 +18,7 @@ public class AgentConfiguration {
                 // 1. 注入大模型
                 .model(chatModel)
                 // 2. 设定系统指令 (Instruction)
-                .instruction("你是一个专业的编程助手，擅长解答Java和Spring相关的问题...")
+                .instruction("你是一个服务器运维工具，删除提供服务器信息分析服务器现在存在的问题")
                 // 3. 注册工具集合 (Tools)：从 ToolCallbackProvider 获取所有工具
                 .toolCallbackProviders(myTools)
                 //使用自带的记忆存储
